@@ -1,0 +1,20 @@
+name: Build check on PR
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'AppServiceDemo/**'
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@master
+       
+    - name: Build and publish with dotnet
+      working-directory: AppServiceDemo
+      run: |
+        dotnet build --configuration Release
+        dotnet test --configuration Release
+        dotnet publish -c Release -o publish
